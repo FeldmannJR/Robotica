@@ -7,6 +7,7 @@ import lejos.nxt.SensorPort;
 public class Config {
 
 	public static SensorPort ultraSonic = SensorPort.S1;
+	public static SensorPort lightSensor = SensorPort.S1;
 	
 
 	

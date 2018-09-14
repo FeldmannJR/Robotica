@@ -1,54 +1,59 @@
 package robotica;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+
 import lejos.nxt.Button;
 import lejos.nxt.LCD;
 import lejos.nxt.Motor;
 import lejos.nxt.NXTRegulatedMotor;
 import lejos.nxt.SensorPort;
 import lejos.nxt.SensorPortListener;
+import lejos.nxt.Sound;
 import lejos.nxt.UltrasonicSensor;
 
-public class Robo {
+public abstract class Robo {
 
-	//Sensores
-	public UltrasonicSensor distance;
+	public int vaiAte = 110;
 	
 	//Motores
 	public NXTRegulatedMotor motorDireita= Motor.A;
 	public NXTRegulatedMotor motorEsquerda= Motor.B;
 	
 	public Robo() {
-		distance = new UltrasonicSensor(Config.ultraSonic);
+		
 	}
 	
 	boolean started = false;
 
-	public boolean onTick() {
+	public boolean loop() {
 		if(!started && Button.RIGHT.isDown()) {
 			start();
 		}else if(!started) {
 			return false;
 		}
-		int d =	distance.getDistance();
-		if(d == 255) {
-			return false;
-		}
-		if(d<120) {
-			LCD.drawInt(d, 0, 0);
-			motorDireita.rotate(10, true);
-			motorEsquerda.rotate(10, true);
-		}else {
-			stop();
-		}
-		return false;
+		return onTick();
+		
 	}
 	
-	public void stop() {
+	public abstract boolean onTick();
+	
+	public void move() {
+		motorDireita.rotate(-10, true);
+		motorEsquerda.rotate(-10, true);
+	}
+
+	public void stop(int d) {
 		LCD.clear();
-		LCD.drawString("Parou a "+distance.getDistance()+" Aperte RIGHT para comecar novamente!", 0, 0);
+		System.out.println("Parou a "+d+" Aperte RIGHT para comecar novamente!");
+		sound();
 		started = false;
 	}
 	
+	public void sound() {
+		//Sound.playNote(Sound.FLUTE,  293, 2000);
+	}
 	public void start() {
 		LCD.clear();
 		started = true;

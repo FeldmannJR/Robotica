@@ -1,7 +1,10 @@
 package robotica;
 
 import lejos.nxt.Button;
+import lejos.nxt.ColorSensor;
+import lejos.nxt.ColorSensor.Color;
 import lejos.nxt.LCD;
+import lejos.nxt.LightSensor;
 import lejos.nxt.Motor;
 import lejos.nxt.SensorPort;
 import lejos.nxt.Sound;
@@ -10,13 +13,14 @@ import lejos.nxt.UltrasonicSensor;
 public class Main {
 
 	public static void main(String [] args) throws Exception {
-		 Robo r = new Robo();
+		 Robo r = new LightRobo();
 		 r.printStart();
 		 while(!Button.ESCAPE.isDown()) {
-			 if(r.onTick()) {
+			 if(r.loop()) {
 				 break;
 			 }
 		 }
 		 
 	}
+
 }
