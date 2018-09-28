@@ -40,8 +40,8 @@ public abstract class Robo {
 	public abstract boolean onTick();
 	
 	public void move() {
-		motorDireita.rotate(-10, true);
-		motorEsquerda.rotate(-10, true);
+		motorDireita.rotate(-Config.speed, true);
+		motorEsquerda.rotate(-Config.speed, true);
 	}
 
 	public void stop(int d) {
