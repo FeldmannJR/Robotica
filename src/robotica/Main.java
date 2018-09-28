@@ -13,7 +13,7 @@ import lejos.nxt.UltrasonicSensor;
 public class Main {
 
 	public static void main(String [] args) throws Exception {
-		 Robo r = new LightRobo();
+		 Robo r = new  MasterRobo();
 		 r.printStart();
 		 while(!Button.ESCAPE.isDown()) {
 			 if(r.loop()) {

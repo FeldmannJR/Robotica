@@ -22,38 +22,25 @@ public class LightRobo extends Robo{
 		 light.calibrateLow();
 	}
 
+	
 	@Override
 	public boolean onTick() {
-		int colorid = light.getColorID();
-		boolean cor = colorid==7;
+		boolean cor = isBlack();
 		if(cor!=lastCor) {
 			andouSteps++;
 			if(lastCor) {
-				//Preto
 				andou+=1.07f;
-				andouPreto++;
 			}else{
-				//Branco
-				andouBranco++;
 				andou+=0.57;
 			}
 			
 		}
-		LCD.drawString(andou+"", 0, 1);
-		LCD.drawString("Color: "+colorid, 0, 0);
-		if(andou<100) {
-			move();
-		}else {
-			stop((int)andou);
-			//move();	
-		}
-		LCD.drawString("Preto "+andouPreto, 0, 2);
-		LCD.drawString("Branco "+andouBranco, 0, 3);
-		
 		lastCor = cor;
 		return false;
 	}
-	
+	public float getLightDistance() {
+		return andou;
+	}
 	public boolean isBlack() {
 		return light.getColorID()==7;
 	}
