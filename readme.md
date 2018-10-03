@@ -1,5 +1,5 @@
 # Robótica
-### 2018/2
+### UFPEL 2018/2
 
 #### Professor
   > Paulo Roberto Ferreira Junior 
