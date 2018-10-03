@@ -22,4 +22,4 @@ O sensor de luz calcula a distância andada analizando a mudança de cores na es
 * Filtro de Kalman = testes/testekalman.txt
 
 ##### Robolina
-![Foto do robô](https://raw.githubusercontent.com/FeldmannJR/Robotica/master/img/robolina.jpeg)
+![Foto do robô](https://github.com/FeldmannJR/Robotica/blob/master/img/robolina.jpeg?raw=true)
