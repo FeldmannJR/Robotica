@@ -6,17 +6,17 @@ import robotica.ufpel.feldmann.Collections;
 
 public class AStar {
 	//World Grid Size MxN, standard 8x8
-	public static int M = 8;
-	public static int N = 8;
+	public static byte M = 8;
+	public static byte N = 8;
 	
-	public static Node goal = new Node(7,7);
+	public static Node goal = new Node((byte)7,(byte)7);
 	
 	
-	public static int Manhattan(int x1, int y1, int x2, int y2) {
-		return Math.abs(x2 - x1) + Math.abs(y2 - y1);
+	public static byte Manhattan(byte x1, byte y1, byte x2, byte y2) {
+		return (byte)(Math.abs(x2 - x1) + Math.abs(y2 - y1));
 	}
-	public static int Manhattan(Node target, Node pos) {
-		return Math.abs(target.x - pos.x) + Math.abs(target.y - pos.y);
+	public static byte Manhattan(Node target, Node pos) {
+		return (byte)(Math.abs(target.x - pos.x) + Math.abs(target.y - pos.y));
 	}
 	public static Node getSmallestF(ArrayList<Node> openlist) {
 		int min = 99999;
@@ -95,8 +95,8 @@ public class AStar {
         		else {
         			OpenList.add(neighbor);
         			neighbor.DParent = current;
-        			neighbor.BG = neighbor.DParent.BG + Manhattan(neighbor, current);
-        			neighbor.BF = neighbor.BG + neighbor.BH;
+        			neighbor.BG = (byte)(neighbor.DParent.BG + Manhattan(neighbor, current));
+        			neighbor.BF = (byte)(neighbor.BG + neighbor.BH);
         		}
         			
         		
@@ -145,8 +145,8 @@ public class AStar {
 		Node[][] Grid = new Node[8][8];
 		
 		/** Start world Grid  **/
-		for (int i = 0; i < M; i++)
-            for (int j = 0; j < N; j++) {
+		for (byte i = 0; i < M; i++)
+            for (byte j = 0; j < N; j++) {
             	Grid[i][j] = new Node(i,j);
             	Grid[i][j].H = Manhattan(i,j,goal.x,goal.y);
             	Grid[i][j].BH = Manhattan(i,j,goal.x,goal.y);
@@ -200,8 +200,8 @@ public class AStar {
         		else {
         			OpenList.add(neighbor);
         			neighbor.Parent = Position;
-        			neighbor.G = neighbor.Parent.G + Manhattan(neighbor, Position);
-        			neighbor.F = neighbor.G + neighbor.H;
+        			neighbor.G = (byte) (neighbor.Parent.G + Manhattan(neighbor, Position));
+        			neighbor.F = (byte) (neighbor.G + neighbor.H);
         		}
         			
         		
