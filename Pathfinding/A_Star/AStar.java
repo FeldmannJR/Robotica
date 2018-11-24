@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class AStar {
 	//World Grid Size MxN, standard 8x8
@@ -31,6 +32,110 @@ public class AStar {
 		}
 		return target;
 	}
+	public static Node getSmallestBF(ArrayList<Node> openlist) {
+		int min = 99999;
+		Node target = null;
+		for(Node node : openlist) {
+			if(node.BF < min) {
+				min = node.F;
+				target = node;
+			}
+		}
+		
+		for(Node node : openlist) {
+			if(node.BF == target.BF) 
+				if(node.BH < target.BH)
+					target = node;
+		}
+		return target;
+	}
+	
+	public static ArrayList<Node> AStarBacktrack(ArrayList<Node> Graph, Node start, Node goal){
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+		System.out.println("I will backtrack from ("+start.x+","+start.y+")" + " to ("+goal.x+","+goal.y+")");
+		ArrayList<Node> shortestPath = new ArrayList<Node>();
+		ArrayList<Node> OpenList = new ArrayList<Node>();
+		ArrayList<Node> ClosedList = new ArrayList<Node>();
+		
+		Node endNode = null;
+		boolean goalReached = false;
+		// put all nodes in unvisited list
+		for(Node node : Graph){
+			node.dist = 9999;
+			node.DParent = null;
+		}
+		
+		Graph.add(goal);
+		
+		// distance from start is zero
+		start.dist = 0;
+		//shortestPath.add(start);
+		
+		// sort openList so we get nearest neighbor
+		
+		Node current = start;
+		
+		do {  
+        	ArrayList<Node> neighbors = getNeibsInList(Graph, current);
+        	 ClosedList.add(current);
+        	 if(OpenList.contains(current))
+        		 OpenList.remove(current);
+        	 
+        	 
+        	for(Node neighbor : neighbors) {
+        		if (ClosedList.contains(neighbor))
+        			continue;
+        		else if( OpenList.contains(neighbor)) {
+        			if(current.BG + Manhattan(neighbor,current) < neighbor.BG)
+        				neighbor.DParent = current;
+        		}
+        		else {
+        			OpenList.add(neighbor);
+        			neighbor.DParent = current;
+        			neighbor.BG = neighbor.DParent.BG + Manhattan(neighbor, current);
+        			neighbor.BF = neighbor.BG + neighbor.BH;
+        		}
+        			
+        		
+        		if(neighbor.x == goal.x && goal.y == neighbor.y) {
+        			goalReached = true;
+        			endNode = neighbor;
+        			endNode.DParent = current;
+        		}
+        			
+        	}
+        	
+        	Node nextPosition = getSmallestBF(OpenList);
+        	current = nextPosition;
+
+
+        } while(goalReached == false || OpenList.isEmpty() == true);
+        
+
+		System.out.println("BACKTRACK ::::: ");
+		Node iter = endNode;
+        while(iter != null) {
+        	shortestPath.add(iter);
+        	System.out.println(iter.x + " " + iter.y);
+        	iter = iter.DParent;
+        }
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ");
+		return shortestPath;
+	}
+	
+	
+	public static ArrayList<Node> getNeibsInList(ArrayList<Node> list, Node Position){
+		ArrayList<Node> neibs = new ArrayList<Node>();
+		for(Node node : list)
+		{
+			if(Position.x + 1 == node.x && Position.y == node.y) neibs.add(node);
+			else if(Position.x - 1 == node.x && Position.y == node.y) neibs.add(node);
+			else if(Position.x == node.x && Position.y + 1 == node.y) neibs.add(node);
+			else if(Position.x == node.x && Position.y - 1 == node.y) neibs.add(node);
+		}
+		return neibs;
+	}
+	
 	
 	public static void main(String[] args) {
 		
@@ -41,6 +146,7 @@ public class AStar {
             for (int j = 0; j < N; j++) {
             	Grid[i][j] = new Node(i,j);
             	Grid[i][j].H = Manhattan(i,j,goal.x,goal.y);
+            	Grid[i][j].BH = Manhattan(i,j,goal.x,goal.y);
             }
 		
         /** Add Obstacles **/
@@ -104,11 +210,43 @@ public class AStar {
         			
         	}
         	
-        	Position = getSmallestF(OpenList); // Reparenting not necessary ??
+        	Node nextPosition = getSmallestF(OpenList);
+        	
+        	if(Position.isNeib(nextPosition))
+        	{
+        		// ROBO ANDA ATÉ NEXT POSITION
+        		
+        		/*************************
+        		 * ************************
+        		 *  Implementar aqui ******
+        		 * ***********************
+        		 * ***********************
+        		 **/
+        		Position = nextPosition;
+        	}
+        	else
+        	{
+        		// BACKTRACKING !!
+        		ArrayList<Node> backtrackList = AStarBacktrack(ClosedList, Position, nextPosition);
+        		Collections.reverse(backtrackList);
+        		
+        		// Robo percorre backtrackList até nextPosition
+        		
+        		/******************************
+        		 * *************************
+        		 *  Implementar aqui ******
+        		 * *************************
+        		 * ***********************
+        		 ****************************/
+        		Position = nextPosition;
+        	}
         	
         	
-        }while(goalReached == false || OpenList.isEmpty() == true);
+        	
+        } while(goalReached == false || OpenList.isEmpty() == true);
         
+        System.out.println("Goal reached: ("+endNode.x+","+endNode.y+")");
+        System.out.println("Printing Shortest Path::::");
         Node iter = endNode;
         while(iter != null) {
         	System.out.println(iter.x + " " + iter.y);
@@ -116,4 +254,7 @@ public class AStar {
         }
 	}
 	
+	
+	
+
 }

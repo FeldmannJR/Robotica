@@ -1,12 +1,14 @@
 import java.util.ArrayList;
 
-public class Node {
+public class Node{
 	public static int STEP = 10; //StepCost (The G cost)
 	Node Parent = null;
-	int H;
-	int G;
-	int F;
+	int H, BH;
+	int G, BG;
+	int F, BF;
 	int x,y;
+	int dist = 9999;
+	Node DParent = null;
 	boolean blocked = false;
 	public Node(int x, int y) {
 		this.x = x;
@@ -25,4 +27,13 @@ public class Node {
 		
 		return neighbors;
 	}
+
+	public boolean isNeib(Node target){
+		if(this.x + 1 == target.x && this.y == target.y) return true;
+		else if(this.x - 1 == target.x && this.y == target.y) return true;
+		else if(this.x == target.x && this.y + 1 == target.y) return true;
+		else if(this.x == target.x && this.y - 1 == target.y) return true;
+		return false;
+	}
+
 }
