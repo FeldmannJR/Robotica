@@ -1,4 +1,4 @@
-package feldmann;
+package robotica.ufpel.feldmann;
 
 import lejos.nxt.Motor;
 import lejos.nxt.NXTRegulatedMotor;

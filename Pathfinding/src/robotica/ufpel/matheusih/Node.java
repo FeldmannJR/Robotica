@@ -1,3 +1,5 @@
+package robotica.ufpel.matheusih;
+
 import java.util.ArrayList;
 
 public class Node{

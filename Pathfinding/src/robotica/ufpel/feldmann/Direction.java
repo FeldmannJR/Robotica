@@ -1,4 +1,4 @@
-package feldmann;
+package robotica.ufpel.feldmann;
 
 public enum Direction {
 	LEFT(-90),FORWARD(0),RIGHT(90);

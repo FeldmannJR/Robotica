@@ -1,5 +1,8 @@
+package robotica.ufpel.matheusih;
+
 import java.util.ArrayList;
-import java.util.Collections;
+
+import robotica.ufpel.feldmann.Collections;
 
 public class AStar {
 	//World Grid Size MxN, standard 8x8
@@ -214,7 +217,7 @@ public class AStar {
         	
         	if(Position.isNeib(nextPosition))
         	{
-        		// ROBO ANDA ATÉ NEXT POSITION
+        		// ROBO ANDA ATï¿½ NEXT POSITION
         		
         		/*************************
         		 * ************************
@@ -230,7 +233,7 @@ public class AStar {
         		ArrayList<Node> backtrackList = AStarBacktrack(ClosedList, Position, nextPosition);
         		Collections.reverse(backtrackList);
         		
-        		// Robo percorre backtrackList até nextPosition
+        		// Robo percorre backtrackList atï¿½ nextPosition
         		
         		/******************************
         		 * *************************
