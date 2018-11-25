@@ -2,7 +2,9 @@ package robotica.ufpel.matheusih;
 
 import java.util.ArrayList;
 
-public class Node{
+import robotica.ufpel.feldmann.AbstractNode;
+
+public class Node extends AbstractNode{
 	public static int STEP = 10; //StepCost (The G cost)
 	Node Parent = null;
 	byte H, BH;
@@ -12,6 +14,7 @@ public class Node{
 	int dist = 9999;
 	Node DParent = null;
 	boolean blocked = false;
+	boolean readBlocked = false;
 	
 	public Node(byte x, byte y) {
 		this.x = x;
@@ -37,6 +40,16 @@ public class Node{
 		else if(this.x == target.x && this.y + 1 == target.y) return true;
 		else if(this.x == target.x && this.y - 1 == target.y) return true;
 		return false;
+	}
+
+	@Override
+	public byte getX() {
+		return x;
+	}
+
+	@Override
+	public byte getY() {
+		return y;
 	}
 
 }

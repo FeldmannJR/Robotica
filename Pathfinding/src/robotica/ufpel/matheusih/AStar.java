@@ -3,8 +3,11 @@ package robotica.ufpel.matheusih;
 import java.util.ArrayList;
 
 import robotica.ufpel.feldmann.Collections;
+import robotica.ufpel.feldmann.Controller;
 
 public class AStar {
+	public static Controller pilot;
+	
 	//World Grid Size MxN, standard 8x8
 	public static byte M = 8;
 	public static byte N = 8;
@@ -141,7 +144,7 @@ public class AStar {
 	
 	
 	public static void main(String[] args) {
-		
+		pilot = new Controller();
 		Node[][] Grid = new Node[8][8];
 		
 		/** Start world Grid  **/
@@ -217,14 +220,13 @@ public class AStar {
         	
         	if(Position.isNeib(nextPosition))
         	{
-        		// ROBO ANDA AT� NEXT POSITION
-        		
         		/*************************
         		 * ************************
         		 *  Implementar aqui ******
         		 * ***********************
         		 * ***********************
         		 **/
+        		pilot.move(Position, nextPosition);
         		Position = nextPosition;
         	}
         	else
