@@ -13,7 +13,7 @@ import robotica.ufpel.feldmann.Direction;
 import robotica.ufpel.feldmann.teste.FNodo.NodoStatus;
 
 public class TesteRobo {
-	private static final int SIZE =4;
+	private static final int SIZE =5;
 
 	private static FNodo[][] nodos = new FNodo[SIZE][SIZE];
 	public static FNodo atual;
@@ -33,63 +33,42 @@ public class TesteRobo {
 	}
 	public static FNodo geVizinho(FNodo nodo,Direction dir) {
 		switch (dir) {
-		case NORTH:
+		case CIMA:
 			return get(nodo.getX(),nodo.getY()+1);
-		case SOUTH:
+		case BAIXO:
 			return get(nodo.getX(),nodo.getY()-1);
-		case EAST:
+		case DIREITA:
 			return get(nodo.getX()+1,nodo.getY());
-		case WEST:
+		case ESQUERDA:
 			return get(nodo.getX()-1,nodo.getY());
 		}
 		return null;
 	}
-	
+	public static Controller pilot;
 	public static void main(String[] args) {
 		initNodos();
 		Debug.alwaysExit();
 		Random rnd = new Random();
-		Controller pilot = new Controller();
-		atual = get(SIZE-1, SIZE-1);
+		 pilot = new Controller();
+		pilot.setDir(Direction.ESQUERDA);
+		atual = get(2,2);
 		atual.visitado = true;
 		atual.status = NodoStatus.EMPTY;
 		Button.waitForAnyPress();
-		do {
-			int x =0;
-			FNodo[] vizinhos = getVizinhos(atual);
-			FNodo go = null;
-			for(FNodo vizinho : vizinhos) {
-				if(vizinho.status==NodoStatus.UNKOWN) {
-					vizinho.status = pilot.hasBarrier(atual, vizinho)?NodoStatus.BARRIER:NodoStatus.EMPTY;
-					Sound.playTone(500+(50*x++), 1000);
-					if(vizinho.status==NodoStatus.BARRIER) {
-						Sound.playTone(200+(50*(x-1)), 1000);
-					}
-				}
-				if(!vizinho.visitado) {
-					if(go==null) {
-						go = vizinho;
-					}
-				}
-			}
-			if(go!=null) {
-				go.visitado = true;
-				pilot.move(atual, go);
-				atual = go;
-			}else {
-				drawGrid();
-				Sound.playTone(150, 2000);
-				break;
-			}
-			
-			
-
-			
-			
-			drawGrid();
-			
-		}while(true);
+		
+		move(2,1);
+		move(2,2);
+		
+		
+		
+		
+		
+		
 		Button.waitForAnyPress();
+	}
+	public static void move(int x,int y) {
+		pilot.move(atual, get(x,y));
+		atual = get(x,y);
 	}
 	
 	public static void drawGrid() {

@@ -6,16 +6,16 @@ public abstract class AbstractNode {
 	public abstract byte getY();
 
 	public Direction getDirection(AbstractNode to) {
-		int difX = getX() - to.getX();
-		int difY = getY() - to.getY();
+		int difX = to.getX()- getX();
+		int difY = to.getY()- getY();
 		if(difX > 0 && difY==0) {
-			return Direction.EAST;
+			return Direction.DIREITA;
 		}else if(difX < 0 && difY==0) {
-			return Direction.WEST;
+			return Direction.ESQUERDA;
 		}else if(difX==0 && difY>0) {
-			return Direction.NORTH;
+			return Direction.CIMA;
 		}else if(difX == 0 && difY<0) {
-			return Direction.SOUTH;
+			return Direction.BAIXO;
 		}	
 		return null;
 	}

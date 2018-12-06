@@ -2,10 +2,12 @@ package robotica.ufpel.feldmann;
 
 public enum Direction {
 	
-	NORTH(0),
-	EAST(90),
-	SOUTH(180),
-	WEST(-90);
+	CIMA(0),
+	//DIREITA
+	DIREITA(90),
+	BAIXO(180),
+	//ESQUERDA
+	ESQUERDA(-90);
 	
 
 	int rot;
