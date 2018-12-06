@@ -12,16 +12,16 @@ import lejos.nxt.NXTRegulatedMotor;
 public class Debug {
 	
 	
-	public static int rotation = 0;
+	public static int rotation = 260;
 	private static NXTRegulatedMotor motorDireita = Motor.C;
 	private static NXTRegulatedMotor motorEsquerda = Motor.A;
-	static float size = 0;
+	static int size = 0;
 	
 	
 	public static void main(String[] args) {
 		alwaysExit();
 		Button.waitForAnyPress();
-		fixedList();
+		debugDistancia();
 			
 	}
 	
@@ -65,7 +65,6 @@ public class Debug {
 			public void buttonReleased(Button b) {
 				pilot.updatePerDistance(size);
 				pilot.forward();
-				rotation = 0;
 				LCD.clear();
 			}
 			
@@ -79,7 +78,7 @@ public class Debug {
 			
 			@Override
 			public void buttonReleased(Button b) {
-				size-=0.1;
+				size+=1;
 				LCD.drawString("SIZE:"+size, 0, 7);
 			}
 			
@@ -92,7 +91,7 @@ public class Debug {
 			
 			@Override
 			public void buttonReleased(Button b) {
-				size+=0.1;
+				size-=1;
 				LCD.drawString("SIZE:"+size, 0, 7);
 				
 			}
@@ -119,7 +118,6 @@ public class Debug {
 					motorDireita.rotate(rotation,true);
 					motorEsquerda.rotate(-rotation,false);
 				}
-				rotation = 0;
 				LCD.clear();
 			}
 			
@@ -133,7 +131,7 @@ public class Debug {
 			
 			@Override
 			public void buttonReleased(Button b) {
-				rotation-=20;
+				rotation-=1;
 				rotation = Math.max(rotation, 0);
 				LCD.drawString("ROT:"+rotation, 0, 7);
 			}
@@ -147,7 +145,7 @@ public class Debug {
 			
 			@Override
 			public void buttonReleased(Button b) {
-				rotation+=20;
+				rotation+=1;
 				rotation = Math.max(rotation, 0);
 				LCD.drawString("ROT:"+rotation, 0, 7);
 				

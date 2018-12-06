@@ -15,8 +15,8 @@ public class Controller {
 	private NXTRegulatedMotor motorEsquerda = Motor.A;
 	private NXTRegulatedMotor motorSensor= Motor.B;
 
-	private  final int degreesToRotation = 285;	
-	private float perDistance = 2;
+	private  final int degreesToRotation = 297;	
+	private float perDistance = 21;
 			 //(float)(360/(5.1 * (5/3)*Math.PI));
 	private final int gridSize = 30;
 	
@@ -31,7 +31,7 @@ public class Controller {
 		
 	}
 	public void updatePerDistance(float f) {
-		perDistance = (float)(360/((3+f) * (5/3)*Math.PI));;
+		perDistance = f;
 	}
 	public void left() { 
 		System.out.print("L ");
@@ -51,7 +51,7 @@ public class Controller {
 
 		System.out.print("F ");
 		Sound.playTone(144, 1);
-		setSpeed(motorDireita.getMaxSpeed()/2);
+		setSpeed(motorDireita.getMaxSpeed()/3);
 		motorDireita.rotate((int)(gridSize*perDistance),true);
 		motorEsquerda.rotate((int)(gridSize*perDistance),false);	
 	}

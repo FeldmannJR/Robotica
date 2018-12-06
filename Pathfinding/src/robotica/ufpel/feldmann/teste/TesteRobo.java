@@ -13,7 +13,7 @@ import robotica.ufpel.feldmann.Direction;
 import robotica.ufpel.feldmann.teste.FNodo.NodoStatus;
 
 public class TesteRobo {
-	private static final int SIZE =5;
+	private static final int SIZE =4;
 
 	private static FNodo[][] nodos = new FNodo[SIZE][SIZE];
 	public static FNodo atual;
@@ -50,14 +50,16 @@ public class TesteRobo {
 		Debug.alwaysExit();
 		Random rnd = new Random();
 		 pilot = new Controller();
-		pilot.setDir(Direction.ESQUERDA);
-		atual = get(2,2);
+		pilot.setDir(Direction.BAIXO);
+		atual = get(0,0);
 		atual.visitado = true;
 		atual.status = NodoStatus.EMPTY;
 		Button.waitForAnyPress();
 		
-		move(2,1);
-		move(2,2);
+		move(1,0);
+		move(1,1);
+		move(0,1);
+		
 		
 		
 		
