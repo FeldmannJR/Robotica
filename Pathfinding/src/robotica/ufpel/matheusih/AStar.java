@@ -2,8 +2,10 @@ package robotica.ufpel.matheusih;
 
 import java.util.ArrayList;
 
+import lejos.nxt.Button;
 import robotica.ufpel.feldmann.Collections;
 import robotica.ufpel.feldmann.Controller;
+import robotica.ufpel.feldmann.Debug;
 
 public class AStar {
 	public static Controller pilot;
@@ -57,8 +59,7 @@ public class AStar {
 	}
 	
 	public static ArrayList<Node> AStarBacktrack(ArrayList<Node> Graph, Node start, Node goal){
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-		System.out.println("I will backtrack from ("+start.x+","+start.y+")" + " to ("+goal.x+","+goal.y+")");
+		System.out.println("b ("+start.x+","+start.y+")" + " to ("+goal.x+","+goal.y+")");
 		ArrayList<Node> shortestPath = new ArrayList<Node>();
 		ArrayList<Node> OpenList = new ArrayList<Node>();
 		ArrayList<Node> ClosedList = new ArrayList<Node>();
@@ -125,7 +126,7 @@ public class AStar {
         	System.out.println(iter.x + " " + iter.y);
         	iter = iter.DParent;
         }
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ");
+        System.out.println("ret SP");
 		return shortestPath;
 	}
 	
@@ -144,6 +145,8 @@ public class AStar {
 	
 	
 	public static void main(String[] args) {
+		Button.waitForAnyPress();
+		Debug.alwaysExit();
 		pilot = new Controller();
 		Node[][] Grid = new Node[8][8];
 		
@@ -226,6 +229,7 @@ public class AStar {
         		 * ***********************
         		 * ***********************
         		 **/
+        		System.out.println(""+Position.getX()+":"+Position.getY()+" -> "+nextPosition.getX()+":"+nextPosition.getY());
         		pilot.move(Position, nextPosition);
         		Position = nextPosition;
         	}
@@ -234,9 +238,13 @@ public class AStar {
         		// BACKTRACKING !!
         		ArrayList<Node> backtrackList = AStarBacktrack(ClosedList, Position, nextPosition);
         		Collections.reverse(backtrackList);
-        		
+        		backtrackList.remove(0);
         		// Robo percorre backtrackList at� nextPosition
-        		
+        		for(Node n : backtrackList) {
+        			System.out.println("B"+Position.getX()+":"+Position.getY()+" -> "+n.getX()+":"+n.getY());
+        			pilot.move(Position, n);
+        			Position = n;
+        		}
         		/******************************
         		 * *************************
         		 *  Implementar aqui ******

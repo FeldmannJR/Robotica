@@ -26,11 +26,13 @@ public class Node extends AbstractNode{
 		ArrayList<Node> neighbors = new ArrayList<Node>();
 		byte x = this.x;
 		byte y = this.y;
-		if(x+1 < AStar.M) neighbors.add(Grid[x+1][y]);
+		if(x+1 < AStar.M) {neighbors.add(Grid[x+1][y]);}
 		if(x-1 >= 0) neighbors.add(Grid[x-1][y]);
 		if(y+1 < AStar.M) neighbors.add(Grid[x][y+1]);
 		if(y-1 >= 0) neighbors.add(Grid[x][y-1]);
-		
+		for(Node n : neighbors) {
+			//n.blocked = AStar.pilot.hasBarrier(this, n);
+		}
 		return neighbors;
 	}
 

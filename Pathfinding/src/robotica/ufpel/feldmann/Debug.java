@@ -21,7 +21,7 @@ public class Debug {
 	public static void main(String[] args) {
 		alwaysExit();
 		Button.waitForAnyPress();
-		debugDistancia();
+		debugRotation();
 			
 	}
 	

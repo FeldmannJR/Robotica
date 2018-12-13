@@ -34,14 +34,12 @@ public class Controller {
 		perDistance = f;
 	}
 	public void left() { 
-		System.out.print("L ");
-		Sound.playTone(415, 1);
+			Sound.playTone(415, 1);
 		setSpeed(motorDireita.getMaxSpeed()/4);
 		motorDireita.rotate(degreesToRotation,true);
 		motorEsquerda.rotate(-degreesToRotation,false);
 	}
 	public void right() {
-		System.out.print("R ");
 		Sound.playTone(214, 1);
 		setSpeed(motorDireita.getMaxSpeed()/4);
 		motorDireita.rotate(-degreesToRotation,true);
@@ -49,7 +47,6 @@ public class Controller {
 	}
 	public void forward() {
 
-		System.out.print("F ");
 		Sound.playTone(144, 1);
 		setSpeed(motorDireita.getMaxSpeed()/3);
 		motorDireita.rotate((int)(gridSize*perDistance),true);
@@ -117,7 +114,6 @@ public class Controller {
 	
 
 	public void move(AbstractNode position,AbstractNode to) {
-		System.out.print("\nTO: "+to.getX() +" "+to.getY()+"");
 		Direction toMove = position.getDirection(to);
 		rotateToDirection(toMove);
 		forward();
