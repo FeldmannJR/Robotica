@@ -2,6 +2,7 @@ package robotica.ufpel.matheusih;
 
 import java.util.ArrayList;
 
+import lejos.nxt.Button;
 import robotica.ufpel.feldmann.AbstractNode;
 
 public class Node extends AbstractNode{
@@ -31,7 +32,10 @@ public class Node extends AbstractNode{
 		if(y+1 < AStar.M) neighbors.add(Grid[x][y+1]);
 		if(y-1 >= 0) neighbors.add(Grid[x][y-1]);
 		for(Node n : neighbors) {
-			//n.blocked = AStar.pilot.hasBarrier(this, n);
+			if(!n.readBlocked) {
+				n.blocked = AStar.pilot.hasBarrier(this, n);
+				n.readBlocked = true;
+			}
 		}
 		return neighbors;
 	}

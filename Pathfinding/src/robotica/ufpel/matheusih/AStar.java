@@ -6,6 +6,7 @@ import lejos.nxt.Button;
 import robotica.ufpel.feldmann.Collections;
 import robotica.ufpel.feldmann.Controller;
 import robotica.ufpel.feldmann.Debug;
+import robotica.ufpel.feldmann.Direction;
 
 public class AStar {
 	public static Controller pilot;
@@ -14,7 +15,8 @@ public class AStar {
 	public static byte M = 8;
 	public static byte N = 8;
 	
-	public static Node goal = new Node((byte)7,(byte)7);
+	public static byte[] start = new byte[]{4,0};
+	public static Node goal = new Node((byte)4,(byte)7);
 	
 	
 	public static byte Manhattan(byte x1, byte y1, byte x2, byte y2) {
@@ -129,7 +131,16 @@ public class AStar {
         System.out.println("ret SP");
 		return shortestPath;
 	}
-	
+	public static void addBlocked(Node[][] Grid) {
+		
+		for(int i =7;i>0;--i) {
+			Grid[i][6].blocked = true;
+		}
+		Grid[0][1].blocked = true;
+		Grid[1][1].blocked = true;
+		Grid[2][1].blocked = true;
+		Grid[3][1].blocked = true;
+	}
 	
 	public static ArrayList<Node> getNeibsInList(ArrayList<Node> list, Node Position){
 		ArrayList<Node> neibs = new ArrayList<Node>();
@@ -148,7 +159,8 @@ public class AStar {
 		Button.waitForAnyPress();
 		Debug.alwaysExit();
 		pilot = new Controller();
-		Node[][] Grid = new Node[8][8];
+		pilot.setDir(Direction.CIMA);
+		Node[][] Grid = new Node[M][N];
 		
 		/** Start world Grid  **/
 		for (byte i = 0; i < M; i++)
@@ -168,20 +180,14 @@ public class AStar {
 		Grid[4][3].blocked = true;
 		Grid[3][5].blocked = true;*/
 		/*obstacles test 2*/
-		for(int i =7;i>0;--i) {
-			Grid[i][6].blocked = true;
-		}
-		Grid[0][1].blocked = true;
-		Grid[1][1].blocked = true;
-		Grid[2][1].blocked = true;
-		Grid[3][1].blocked = true;
-		
-        ArrayList<Node> OpenList = new ArrayList<Node>();  // Unchecked Nodes
+		//addBlocked(Grid);
+        
+		ArrayList<Node> OpenList = new ArrayList<Node>();  // Unchecked Nodes
         ArrayList<Node> ClosedList = new ArrayList<Node>(); //  Checked Nodes
         ArrayList<Node> ObstaclesList = new ArrayList<Node>(); //  Checked Nodes
         
         boolean goalReached = false;
-        Node start = Grid[0][0];
+        Node start = Grid[AStar.start[0]][AStar.start[1]];
         Node Position = start;  // My current Position	
         
         Node endNode = null;
@@ -260,11 +266,13 @@ public class AStar {
         
         System.out.println("Goal reached: ("+endNode.x+","+endNode.y+")");
         System.out.println("Printing Shortest Path::::");
+        Button.waitForAnyPress();
         Node iter = endNode;
         while(iter != null) {
         	System.out.println(iter.x + " " + iter.y);
         	iter = iter.Parent;
         }
+        Button.waitForAnyPress();
 	}
 	
 	

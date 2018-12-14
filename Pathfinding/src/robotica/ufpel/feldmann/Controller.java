@@ -15,38 +15,60 @@ public class Controller {
 	private NXTRegulatedMotor motorEsquerda = Motor.A;
 	private NXTRegulatedMotor motorSensor= Motor.B;
 
-	private  final int degreesToRotation = 297;	
-	private float perDistance = 21;
+	private int degreesToRotation = 271;
+	public static int rotations = 0;
+	private int perDistance = 21;
 			 //(float)(360/(5.1 * (5/3)*Math.PI));
 	private final int gridSize = 30;
 	
 	private Direction dir = Direction.CIMA;
 	
 	private UltrasonicSensor ultra;
-	
-	public Controller() {
-		
-		
-		ultra = new UltrasonicSensor(SensorPort.S1);
-		
+	public void setDegreesToRotation(int degreesToRotation) {
+		this.degreesToRotation = degreesToRotation;
 	}
-	public void updatePerDistance(float f) {
+	public Controller() {
+		ultra = new UltrasonicSensor(SensorPort.S1);
+	}
+	
+	public int getDegreesToRotation() {
+		return degreesToRotation;
+	}
+	
+	public int getPerDistance() {
+		return perDistance;
+	}
+	public void updatePerDistance(int f) {
 		perDistance = f;
 	}
+	public int calcRotation() {
+		int rotate = degreesToRotation;
+		if(rotations%2==1) {
+			rotate-=8;
+		}
+		if(rotations%4==3) {
+			rotate-=20;
+		}
+		return rotate;
+		
+	}
 	public void left() { 
-			Sound.playTone(415, 1);
+		int rot = calcRotation();
+		Sound.playTone(415, 1);
 		setSpeed(motorDireita.getMaxSpeed()/4);
-		motorDireita.rotate(degreesToRotation,true);
-		motorEsquerda.rotate(-degreesToRotation,false);
+		motorDireita.rotate(rot,true);
+		motorEsquerda.rotate(-rot,false);
+		rotations++;
 	}
 	public void right() {
 		Sound.playTone(214, 1);
 		setSpeed(motorDireita.getMaxSpeed()/4);
-		motorDireita.rotate(-degreesToRotation,true);
-		motorEsquerda.rotate(degreesToRotation,false);
+		int rotate = calcRotation();
+		motorDireita.rotate(-rotate,true);
+		motorEsquerda.rotate(rotate,false);
+		rotations++;
 	}
 	public void forward() {
-
 		Sound.playTone(144, 1);
 		setSpeed(motorDireita.getMaxSpeed()/3);
 		motorDireita.rotate((int)(gridSize*perDistance),true);
@@ -126,7 +148,7 @@ public class Controller {
 		if(d==255) {
 			return false;
 		}
-		if(d<gridSize) {
+		if(d<((float)gridSize*1.2f)) {
 			return true;
 		}
 		return false;

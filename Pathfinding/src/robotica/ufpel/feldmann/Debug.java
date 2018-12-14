@@ -15,14 +15,17 @@ public class Debug {
 	public static int rotation = 260;
 	private static NXTRegulatedMotor motorDireita = Motor.C;
 	private static NXTRegulatedMotor motorEsquerda = Motor.A;
-	static int size = 0;
+	static int size = 275;
 	
 	
 	public static void main(String[] args) {
 		alwaysExit();
 		Button.waitForAnyPress();
-		debugRotation();
-			
+		rotation = pilot.getDegreesToRotation();
+		size = pilot.getPerDistance();
+		debugDistancia();
+		
+		
 	}
 	
 	static Controller pilot = new Controller();
@@ -111,12 +114,12 @@ public class Debug {
 			
 			@Override
 			public void buttonReleased(Button b) {
-				motorDireita.setSpeed(motorDireita.getMaxSpeed()/4);
-				motorEsquerda.setSpeed(motorEsquerda.getMaxSpeed()/4);
-				
+	
+				pilot.setDegreesToRotation(rotation);
 				for(int x =0;x<4;x++) {
-					motorDireita.rotate(rotation,true);
-					motorEsquerda.rotate(-rotation,false);
+						pilot.right();
+					
+					
 				}
 				LCD.clear();
 			}
